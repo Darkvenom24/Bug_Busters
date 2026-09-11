@@ -1,0 +1,13 @@
+date,crop,region,season,historical_orders_tons,buyer_inquiries,festive_index,rainfall_mm,predicted_demand_tons
+2026-06-01,Tomato,Rajkot,Monsoon,950,120,1.0,45.2,980
+2026-07-01,Tomato,Rajkot,Monsoon,1050,140,1.1,120.5,1090
+2026-08-01,Tomato,Rajkot,Monsoon,1180,165,1.2,85.0,1220
+2026-09-01,Tomato,Rajkot,Kharif,1200,190,1.35,32.0,1650
+2026-06-01,Onion,Ahmedabad,Monsoon,1600,210,1.0,40.0,1620
+2026-07-01,Onion,Ahmedabad,Monsoon,1690,230,1.1,95.0,1720
+2026-08-01,Onion,Ahmedabad,Monsoon,1750,260,1.25,60.0,1820
+2026-09-01,Onion,Ahmedabad,Kharif,1800,310,1.4,25.0,2400
+2026-06-01,Banana,Anand,YearRound,780,95,1.0,50.0,790
+2026-07-01,Banana,Anand,YearRound,810,105,1.05,80.0,820
+2026-08-01,Banana,Anand,YearRound,840,115,1.1,55.0,860
+2026-09-01,Banana,Anand,YearRound,850,130,1.2,30.0,980

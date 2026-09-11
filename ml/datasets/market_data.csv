@@ -1,0 +1,8 @@
+mandi_id,market_name,district,state,commodity,modal_price_rs_quintal,min_price,max_price,arrival_date
+MND-GJ-01,Rajkot APMC,Rajkot,Gujarat,Tomato,2800,2400,3200,2026-09-11
+MND-GJ-02,Ahmedabad APMC,Ahmedabad,Gujarat,Onion,2600,2200,3000,2026-09-11
+MND-GJ-03,Gondal APMC,Rajkot,Gujarat,Green Chilli,4500,4000,5200,2026-09-11
+MND-GJ-04,Anand APMC,Anand,Gujarat,Banana,1800,1600,2100,2026-09-11
+MND-GJ-05,Deesa APMC,Banaskantha,Gujarat,Potato,1500,1300,1700,2026-09-11
+MND-MH-01,Nashik APMC,Nashik,Maharashtra,Onion,2550,2100,2900,2026-09-11
+MND-MH-02,Pune APMC,Pune,Maharashtra,Tomato,2900,2500,3300,2026-09-11

@@ -1,0 +1,10 @@
+crop,mandi_ref_price,demand_score,supply_score,quality_grade,is_organic,distance_km,fair_price_min,fair_price_max
+Tomato,28.0,0.85,0.50,Grade A,1,25,30,33
+Tomato,28.0,0.85,0.50,Grade A,0,25,29,32
+Tomato,28.0,0.85,0.50,Grade B,0,25,27,30
+Onion,26.0,0.80,0.60,Grade A,0,35,28,31
+Onion,26.0,0.80,0.60,Grade B,0,35,25,28
+Spinach,19.0,0.90,0.30,Grade A,1,15,22,25
+Potato,14.0,0.50,0.80,Grade A,0,40,16,18
+Banana,17.0,0.70,0.65,Grade A,0,30,18,21
+Green Chilli,42.0,0.88,0.40,Grade A,1,20,48,53
