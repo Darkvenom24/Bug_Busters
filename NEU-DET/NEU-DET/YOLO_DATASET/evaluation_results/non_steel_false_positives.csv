@@ -1,0 +1,7 @@
+﻿image_path,detections,predicted_classes_confidence,max_confidence
+C:\Users\ridha\OneDrive\Desktop\Bug_busturs\NEU-DET\NEU-DET\YOLO_DATASET\non_steel_test\phone.jpeg,3,scratches (0.717); patches (0.362); scratches (0.344),0.7173
+C:\Users\ridha\OneDrive\Desktop\Bug_busturs\NEU-DET\NEU-DET\YOLO_DATASET\non_steel_test\Screenshot 2026-10-09 234218.png,3,patches (0.826); patches (0.711); patches (0.405),0.8259
+C:\Users\ridha\OneDrive\Desktop\Bug_busturs\NEU-DET\NEU-DET\YOLO_DATASET\non_steel_test\Screenshot 2026-10-09 234249.png,4,patches (0.720); patches (0.647); patches (0.384); patches (0.318),0.7204
+C:\Users\ridha\OneDrive\Desktop\Bug_busturs\NEU-DET\NEU-DET\YOLO_DATASET\non_steel_test\WhatsApp Image 2026-10-09 at 11.43.35 PM.jpeg,1,rolled-in_scale (0.291),0.2912
+C:\Users\ridha\OneDrive\Desktop\Bug_busturs\NEU-DET\NEU-DET\YOLO_DATASET\non_steel_test\WhatsApp Image 2026-10-09 at 11.43.45 PM.jpeg,0,None,0.0000
+C:\Users\ridha\OneDrive\Desktop\Bug_busturs\NEU-DET\NEU-DET\YOLO_DATASET\non_steel_test\WhatsApp Image 2026-10-09 at 11.43.54 PM.jpeg,2,scratches (0.458); scratches (0.435),0.4581
