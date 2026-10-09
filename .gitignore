@@ -1,0 +1,12 @@
+
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+.vscode/
+
+# Training outputs and local database
+runs/
+inspection_history.db
+inspection_outputs/
