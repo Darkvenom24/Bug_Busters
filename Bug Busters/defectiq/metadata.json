@@ -1,0 +1,6 @@
+{
+  "name": "DefectIQ",
+  "description": "AI-Powered Real-Time Industrial Quality Intelligence System - Detect Defects, Ensure Quality, Prevent Waste.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
