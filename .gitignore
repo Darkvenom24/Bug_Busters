@@ -6,7 +6,9 @@ __pycache__/
 .env
 .vscode/
 
-# Training outputs and local database
+# Training outputs
 runs/
+
+# Local inspection data
 inspection_history.db
 inspection_outputs/
