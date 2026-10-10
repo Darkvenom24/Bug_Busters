@@ -4,7 +4,7 @@ import { Sidebar } from './components/navigation/Sidebar';
 import { Header } from './components/layout/Header';
 import { PublicHomePage } from './pages/PublicHomePage';
 import { AboutPage } from './pages/AboutPage';
-import { DashboardPage } from './pages/DashboardPage';
+import DashboardPage from './pages/DashboardPage';
 import { LiveInspectionPage } from './pages/LiveInspectionPage';
 import { InspectionsPage } from './pages/InspectionsPage';
 import { InspectionDetailPage } from './pages/InspectionDetailPage';

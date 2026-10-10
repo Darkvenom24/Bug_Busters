@@ -14,6 +14,9 @@ interface InspectionViewerProps {
   onSelectPreset: (presetKey: string) => void;
   videoRef: React.RefObject<HTMLVideoElement | null>;
   useWebcam: boolean;
+  onCaptureWebcam?: () => void;
+  backendConnected?: boolean;
+  isAnalyzing?: boolean;
 }
 
 export const InspectionViewer: React.FC<InspectionViewerProps> = ({
@@ -27,7 +30,10 @@ export const InspectionViewer: React.FC<InspectionViewerProps> = ({
   onFileUpload,
   onSelectPreset,
   videoRef,
-  useWebcam
+  useWebcam,
+  onCaptureWebcam,
+  backendConnected = false,
+  isAnalyzing = false
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -70,9 +76,16 @@ export const InspectionViewer: React.FC<InspectionViewerProps> = ({
           <span className="font-mono text-xs font-medium text-slate-500">
             FRAME #{counter.toLocaleString()}
           </span>
+
+          {backendConnected && (
+            <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
+              API SYNCED
+            </span>
+          )}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {cameraActive && !isPaused && (
             <span className="inline-flex items-center gap-1 font-mono text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
               <Zap size={11} /> {fps.toFixed(1)} FPS
@@ -92,6 +105,17 @@ export const InspectionViewer: React.FC<InspectionViewerProps> = ({
               <Camera size={13} />
               <span>{useWebcam ? 'Webcam Active' : 'Use Webcam'}</span>
             </button>
+
+            {useWebcam && onCaptureWebcam && (
+              <button
+                onClick={onCaptureWebcam}
+                className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-[#4169E1] text-white hover:bg-[#3457C2] transition-colors flex items-center gap-1.5 shadow-2xs"
+                title="Capture current video frame and run AI inspection"
+              >
+                <Camera size={13} />
+                <span>Capture Frame</span>
+              </button>
+            )}
 
             <button
               onClick={() => fileInputRef.current?.click()}
@@ -213,8 +237,21 @@ export const InspectionViewer: React.FC<InspectionViewerProps> = ({
           </div>
         </div>
 
+        {/* Analyzing / Processing AI Indicator */}
+        {isAnalyzing && (
+          <div className="absolute inset-0 bg-[#0F172A]/70 backdrop-blur-xs flex flex-col items-center justify-center pointer-events-none z-10 animate-in fade-in">
+            <div className="w-10 h-10 rounded-full border-3 border-blue-500/30 border-t-blue-400 animate-spin mb-2" />
+            <span className="text-xs font-semibold text-white tracking-wide">
+              AI INFERENCE IN PROGRESS...
+            </span>
+            <span className="text-[10px] text-slate-400 mt-0.5 font-mono">
+              Analyzing surface texture & bounding boxes
+            </span>
+          </div>
+        )}
+
         {/* Quick Sample Presets bar inside viewer bottom-right */}
-        <div className="absolute bottom-3 right-3 bg-[#0F172A]/85 backdrop-blur-md rounded-xl p-1.5 border border-slate-700/80 flex items-center gap-1">
+        <div className="absolute bottom-3 right-3 bg-[#0F172A]/85 backdrop-blur-md rounded-xl p-1.5 border border-slate-700/80 flex flex-wrap items-center gap-1 z-20">
           <span className="text-[10px] font-semibold text-slate-400 px-2 uppercase">Presets:</span>
           <button
             onClick={() => onSelectPreset('steelCrack')}
@@ -235,10 +272,12 @@ export const InspectionViewer: React.FC<InspectionViewerProps> = ({
             Flawless (PASS)
           </button>
           <button
-            onClick={() => onSelectPreset('uncertain')}
-            className="px-2 py-1 text-[11px] font-medium bg-amber-950/60 text-amber-200 hover:bg-amber-900 border border-amber-800 rounded transition-colors"
+            onClick={() => onSelectPreset('simulateEdge')}
+            className="px-2 py-1 text-[11px] font-semibold bg-[#4169E1]/30 text-blue-200 hover:bg-[#4169E1]/50 border border-blue-500/50 rounded transition-colors flex items-center gap-1"
+            title="Simulate edge camera trigger and post to FastAPI backend"
           >
-            Uncertain Review
+            <Zap size={10} className="text-blue-400" />
+            Edge Trigger
           </button>
         </div>
       </div>

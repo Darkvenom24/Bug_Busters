@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '../lib/store';
+import { fetchBackendStats, BackendAnalyticsStats } from '../lib/inspectionApi';
 import {
   BarChart,
   Bar,
@@ -35,15 +36,31 @@ export const DefectAnalyticsPage: React.FC<DefectAnalyticsPageProps> = ({ onNavi
   const { alerts, batches } = useApp();
 
   // Defect breakdown
-  const defectDistribution = [
-    { defect: 'Surface Crack', count: 68, fill: '#DC4545' },
-    { defect: 'Solder Bridge', count: 42, fill: '#EA580C' },
-    { defect: 'Slag Inclusion', count: 31, fill: '#D99020' },
-    { defect: 'Blowhole / Porosity', count: 18, fill: '#4169E1' },
-    { defect: 'Scratch / Burr', count: 11, fill: '#7563E8' },
-  ];
+  const [defectDistribution, setDefectDistribution] = useState<Array<{ defect: string; count: number; fill: string }>>([]);
+
+  // Load analytics stats from backend
+  useEffect(() => {
+    const loadStats = async () => {
+      try {
+        const stats: BackendAnalyticsStats = await fetchBackendStats();
+        const breakdown = stats.defect_categories_breakdown || {};
+        const colors = ['#DC4545', '#EA580C', '#D99020', '#4169E1', '#7563E8'];
+        const entries = Object.entries(breakdown).map(([defect, count], idx) => ({
+          defect,
+          count: Number(count),
+          fill: colors[idx % colors.length]
+        }));
+        setDefectDistribution(entries);
+      } catch (e) {
+        console.warn('Failed to fetch analytics stats:', e);
+      }
+    };
+    loadStats();
+  }, []);
+
 
   // Severity split
+  // Keep static severity distribution for now or compute dynamically if needed
   const severityDistribution = [
     { name: 'CRITICAL', value: 42, color: '#DC4545' },
     { name: 'HIGH', value: 58, color: '#EA580C' },

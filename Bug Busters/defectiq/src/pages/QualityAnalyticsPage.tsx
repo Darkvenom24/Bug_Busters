@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from "react";
 import { useApp } from '../lib/store';
+import { fetchBackendInspections, BackendInspection } from '../lib/inspectionApi';
 import {
   LineChart,
   Line,
@@ -25,15 +26,41 @@ export const QualityAnalyticsPage: React.FC<QualityAnalyticsPageProps> = ({ onNa
   const [range, setRange] = useState('7d');
 
   // Daily statistical process trend
-  const dailyQualityTrends = [
-    { day: 'Mon', inspected: 1100, passRate: 91.2, defectRate: 8.8 },
-    { day: 'Tue', inspected: 1250, passRate: 89.5, defectRate: 10.5 },
-    { day: 'Wed', inspected: 1320, passRate: 93.0, defectRate: 7.0 },
-    { day: 'Thu', inspected: 1190, passRate: 88.4, defectRate: 11.6 },
-    { day: 'Fri', inspected: 1420, passRate: 92.1, defectRate: 7.9 },
-    { day: 'Sat', inspected: 1280, passRate: 87.8, defectRate: 12.2 },
-    { day: 'Sun (Today)', inspected: 1248, passRate: 87.0, defectRate: 13.0 },
-  ];
+  const [dailyQualityTrends, setDailyQualityTrends] = useState<any[]>([]);
+
+  // Fetch inspections and compute daily trends
+  useEffect(() => {
+    const loadTrends = async () => {
+      try {
+        const { items } = await fetchBackendInspections(100);
+        // Group by day
+        const dayMap: Record<string, { inspected: number; passRate: number; defectRate: number }> = {};
+        items.forEach((insp: BackendInspection) => {
+          const date = new Date(insp.timestamp).toLocaleDateString('en-US', { weekday: 'short' });
+          if (!dayMap[date]) {
+            dayMap[date] = { inspected: 0, passRate: 0, defectRate: 0 };
+          }
+          dayMap[date].inspected += 1;
+          if (insp.result === 'PASS') {
+            dayMap[date].passRate += 1;
+          } else {
+            dayMap[date].defectRate += 1;
+          }
+        });
+        const trends = Object.entries(dayMap).map(([day, v]) => ({
+          day,
+          inspected: v.inspected,
+          passRate: v.inspected ? Math.round((v.passRate / v.inspected) * 1000) / 10 : 0,
+          defectRate: v.inspected ? Math.round((v.defectRate / v.inspected) * 1000) / 10 : 0,
+        }));
+        setDailyQualityTrends(trends);
+      } catch (e) {
+        console.warn('Failed to load trend data:', e);
+      }
+    };
+    loadTrends();
+  }, []);
+
 
   // Shift performance comparison
   const shiftData = [
@@ -67,25 +94,22 @@ export const QualityAnalyticsPage: React.FC<QualityAnalyticsPageProps> = ({ onNa
           <div className="flex bg-[#F8FAFD] border border-slate-200 rounded-xl p-1 text-xs">
             <button
               onClick={() => setRange('24h')}
-              className={`px-3 py-1 rounded-lg font-medium transition-colors ${
-                range === '24h' ? 'bg-white text-[#4169E1] shadow-xs font-semibold' : 'text-slate-600'
-              }`}
+              className={`px-3 py-1 rounded-lg font-medium transition-colors ${range === '24h' ? 'bg-white text-[#4169E1] shadow-xs font-semibold' : 'text-slate-600'
+                }`}
             >
               24 Hours
             </button>
             <button
               onClick={() => setRange('7d')}
-              className={`px-3 py-1 rounded-lg font-medium transition-colors ${
-                range === '7d' ? 'bg-white text-[#4169E1] shadow-xs font-semibold' : 'text-slate-600'
-              }`}
+              className={`px-3 py-1 rounded-lg font-medium transition-colors ${range === '7d' ? 'bg-white text-[#4169E1] shadow-xs font-semibold' : 'text-slate-600'
+                }`}
             >
               7 Days
             </button>
             <button
               onClick={() => setRange('30d')}
-              className={`px-3 py-1 rounded-lg font-medium transition-colors ${
-                range === '30d' ? 'bg-white text-[#4169E1] shadow-xs font-semibold' : 'text-slate-600'
-              }`}
+              className={`px-3 py-1 rounded-lg font-medium transition-colors ${range === '30d' ? 'bg-white text-[#4169E1] shadow-xs font-semibold' : 'text-slate-600'
+                }`}
             >
               30 Days
             </button>
